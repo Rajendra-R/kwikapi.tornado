@@ -3,6 +3,7 @@
 import asyncio
 import gzip
 import io
+import msgpack
 
 from tornado.web import RequestHandler as TornadoRequestHandler
 from tornado.web import asynchronous
