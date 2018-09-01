@@ -107,8 +107,14 @@ class RequestHandler(TornadoRequestHandler):
         if not res._stream:
             self.write(res._data)
         else:
-            for x in res._data:
-                self.write(x)
+            try:
+                for x in res._data:
+                    self.write(x)
+            except Exception as e:
+                msg = e.message if hasattr(e, 'message') else str(e)
+                msg = '[%s: %s]' % (e.__class__.__name__, msg)
+                self.write(msgpack.packb(msg))
+                self.write('')
 
         self.flush()
         self.finish()
